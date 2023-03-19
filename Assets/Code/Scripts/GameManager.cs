@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,10 +19,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameOverPanelScoreText;
     [SerializeField] private float gameOverPanelScoreTextFontSize = 72f;
 
+    [FormerlySerializedAs("cutSounds")]
+    [Header("Sounds")]
+    [SerializeField] private AudioClip[] sliceSounds;
+    private AudioSource audioSource;
+
     private bool hadBeenHighscore = false; // Used when GameOverPanel appears
     
     private void Awake() // Game started
     {
+        Application.targetFrameRate = 60;
+
+        audioSource = GetComponent<AudioSource>();
+        
         gameOverPanel.SetActive(false);
 
         scoreText.text = "0";
@@ -76,5 +86,11 @@ public class GameManager : MonoBehaviour
         }
         
         Time.timeScale = 1;
+    }
+    
+    public void PlaySliceSound()
+    {
+        AudioClip randomSound = sliceSounds[Random.Range(0, sliceSounds.Length)];
+        audioSource.PlayOneShot(randomSound);
     }
 }

@@ -32,6 +32,7 @@ public class Fruit : MonoBehaviour
                 5f);
         }
 
+        FindObjectOfType<GameManager>().PlaySliceSound();
         FindObjectOfType<GameManager>().IncreaseScore(2);
         
         Destroy(inst, 5);
